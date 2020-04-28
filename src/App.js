@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Navbar, NavbarBrand} from 'reactstrap';
-import Directory from './components/DirectoryComponents';
-import './App.css';
+import Main from '/components/MainComponent';
+
+
 import { CAMPSITES } from './shared/campsites';
 
 class App extends Component {
@@ -14,13 +14,7 @@ class App extends Component {
   render() {
       return (
           <div className="App">
-              <Navbar dark color="primary">
-              <div className="container">
-              <NavbarBrand href="/">NuCamp</NavbarBrand>
-                    <Directory campsites ={this.state.campsites}/>
-              
-              </div>
-              </Navbar>
+              <Main />
           </div>
       );
   }
