@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
-import Directory from './DirectoryComponent';
+import Directory from './DirectoryComponents';
 import CampsiteInfo from './CampsiteInfoComponent';
 import { CAMPSITES } from '../shared/campsites';
 
@@ -10,6 +10,7 @@ class Main extends Component {
         this.state = {
             campsites: CAMPSITES,
             selectedCampsite: null
+          
         };
     }
 
