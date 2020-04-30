@@ -15,7 +15,7 @@ function RenderCampsite(campsite) {
             </div>
         );
     }
-    function RenderComments(comments) {
+    function RenderComments({comments}) {
       
         if (comments) {
             return (
@@ -28,13 +28,13 @@ function RenderCampsite(campsite) {
         } return <div />
     
     };
-      function CampsiteInfo() {
-            if (this.props.campsite) {
+      function CampsiteInfo({campsite}) {
+            if (props.campsite) {
                 return (
                     <div className="container">
                         <div className="row">
-                            {this.renderCampsite(this.props.campsite)}
-                            {this.renderComments(this.props.campsite.comments)}
+                            {RenderCampsite(props.campsite)}
+                            {RenderComments(props.campsite.comments)}
                         </div>
                     </div>
                 );
