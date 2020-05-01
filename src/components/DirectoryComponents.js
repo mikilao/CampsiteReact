@@ -1,5 +1,5 @@
 import React from 'react';
-
+import CampsiteInfo from './CampsiteInfoComponent';
 import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 
 function RenderDirectoryItem({campsite, onClick}){
@@ -7,7 +7,7 @@ function RenderDirectoryItem({campsite, onClick}){
             <Card onClick={() => this.props.onClick(campsite.id)}>
                     <CardImg width="100%" src={campsite.image} alt={campsite.name} />
                     <CardImgOverlay>
-                        <CardTitle>{campsite.name}</CardTitle>
+                           <CardTitle>{campsite.name}</CardTitle>
                     </CardImgOverlay>
                 </Card>
                 )
