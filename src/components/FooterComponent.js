@@ -1,6 +1,7 @@
 import React, {Component } from "react";
 class Footer extends Component {
     render (){
+        return(
         <footer className="site-footer">
             <div className="container">
                 <div className="row">             
@@ -8,7 +9,7 @@ class Footer extends Component {
                         <h5>Links</h5>
                         <ul className="list-unstyled">
                             <li><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
+                            <li><a href="http://www.google.com">About</a></li>
                             <li><a href="#">Directory</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
@@ -27,7 +28,7 @@ class Footer extends Component {
                 </div>
             </div> 
         </footer>
-    }
+        )}
 }
 
 export default Footer; 
