@@ -24,9 +24,10 @@ function RenderCampsite(campsite) {
                         <div className="container">
                             <div className="row">
                                 {this.renderCampsite(this.props.campsite)}
-                                {this.renderComments(this.props.campsite.comments)}
+                                
+                                {this.renderComments(this.props.comments)}
                             </div>
-                        </div>
+                        </div>//comments and campsite are now being popuated by the CampstieWithId component in main
                     );
                 }
                 return <div />;

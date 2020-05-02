@@ -1,14 +1,17 @@
 import React from 'react';
-import CampsiteInfo from './CampsiteInfoComponent';
+import {Link} from 'react-router-dom';
 import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 
-function RenderDirectoryItem({campsite, onClick}){
-    return(
-            <Card onClick={() => this.props.onClick(campsite.id)}>
+
+function RenderDirectoryItem({campsite}){
+    return(//Link changes the directory and give you the campsite by id#
+            <Card >
+                <Link to={`/directory/${campsite.id}`}>
                     <CardImg width="100%" src={campsite.image} alt={campsite.name} />
                     <CardImgOverlay>
                            <CardTitle>{campsite.name}</CardTitle>
                     </CardImgOverlay>
+                    </Link>
                 </Card>
                 )
     }
@@ -42,7 +45,7 @@ function Directory (props) {
         const directory = props.campsites.map(campsite => {
             return (
                 <div key={campsite.id} className="col-md-5 m-1">
-               <RenderDirectoryItem campsite={campsite} onClick={props.onClick} />>
+               <RenderDirectoryItem campsite={campsite}  />>
             </div>
             );
         });
