@@ -7,14 +7,21 @@ import Footer from './FooterComponent';
 import Home from "./HomeComponent";
 import About from "./AboutComponent";
 import Contact from "./ContactComponent";
-import {Switch, Route, Redirect} from "react-router-dom";
-import { COMMENTS } from '../shared/comments';
-import { PARTNERS } from '../shared/partners';
-import { PROMOTIONS } from '../shared/promotions';
-import { CAMPSITES } from '../shared/campsites';
+import {connect} from "react-redux";
+import {Switch, Route, Redirect, withRouter} from "react-router-dom";
+
+const mapStateToPRops = state => {
+    return{
+        campsites: state.campsites,
+        comments: state.comments,
+        partners: state.partners,
+        promotions: state.promotions
+    }
+}
 
 class Main extends Component {
-    constructor(props) {
+   /* constructor(props) **removed because now the states are being stored in redux** 
+    {
         super(props);
         this.state = {
             campsites: CAMPSITES,
@@ -22,14 +29,14 @@ class Main extends Component {
             partners: PARTNERS,
             promotions: PROMOTIONS
                  };
-    }
+    }*/
     render() {
         const HomePage = () =>{
             return( 
                 <Home 
-                campsite={this.state.campsites.filter(campsite => campsite.featured)[0]}
-                    promotion={this.state.promotions.filter(promotion => promotion.featured)[0]}
-                    partner={this.state.partners.filter(partner => partner.featured)[0]} />
+                campsite={this.prop.campsites.filter(campsite => campsite.featured)[0]}
+                    promotion={this.prop.promotions.filter(promotion => promotion.featured)[0]}
+                    partner={this.prop.partners.filter(partner => partner.featured)[0]} />
             );
         }
         //initialize the new campsite with for the router link below variable with an arrow function
@@ -37,26 +44,24 @@ class Main extends Component {
             return (
                 //creating a new array of campsite Id numbers using filter and the Campsite info component
                 <CampsiteInfo 
-                campsite={this.state.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)} 
-                comments={this.state.comments.filter(comment => comment.id=== +match.params.commentId)}
+                campsite={this.prop.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)} 
+                comments={this.prop.comments.filter(comment => comment.id=== +match.params.commentId)}
                 />
             //using '+" infront of a string convert it to a number
                 )
         }
         return (
-            <div>
-                           
+            <div>    
                 <Header />
-                
                 <Switch>
                     <Route path='/directory/:campsiteId' component={CampsiteWithId}/>
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/contactus' component={Contact} />
-                    <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
-                    <Route exact path='/aboutus' render={() => <About partners={this.state.partners}/>} ></Route>
+                    <Route exact path='/directory' render={() => <Directory campsites={this.prop.campsites} />} />
+                    <Route exact path='/aboutus' render={() => <About partners={this.prop.partners}/>} ></Route>
                     <Redirect to='/home' />
                 </Switch>
-                <Directory campsites={this.state.campsites} />
+                
                 
                 <Footer />
             </div>
@@ -64,4 +69,4 @@ class Main extends Component {
     };
 }
 
-export default Main;
+export default withRouter(connect(mapStateToPRops)(Main));
