@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+
 import Directory from './DirectoryComponents';
 import CampsiteInfo from './CampsiteInfoComponent';
 import Header from './HeaderComponent';
@@ -34,9 +34,9 @@ class Main extends Component {
         const HomePage = () =>{
             return( 
                 <Home 
-                campsite={this.prop.campsites.filter(campsite => campsite.featured)[0]}
-                    promotion={this.prop.promotions.filter(promotion => promotion.featured)[0]}
-                    partner={this.prop.partners.filter(partner => partner.featured)[0]} />
+                campsite={this.props.campsites.filter(campsite => campsite.featured)[0]}
+                    promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
+                    partner={this.props.partners.filter(partner => partner.featured)[0]} />
             );
         }
         //initialize the new campsite with for the router link below variable with an arrow function
