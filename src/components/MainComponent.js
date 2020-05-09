@@ -7,6 +7,7 @@ import Footer from './FooterComponent';
 import Home from "./HomeComponent";
 import About from "./AboutComponent";
 import Contact from "./ContactComponent";
+
 import {connect} from "react-redux";
 import {Switch, Route, Redirect, withRouter} from "react-router-dom";
 
@@ -44,8 +45,8 @@ class Main extends Component {
             return (
                 //creating a new array of campsite Id numbers using filter and the Campsite info component
                 <CampsiteInfo 
-                campsite={this.prop.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)} 
-                comments={this.prop.comments.filter(comment => comment.id=== +match.params.commentId)}
+                campsite={this.props.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)} 
+                comments={this.props.comments.filter(comment => comment.id=== +match.params.commentId)}
                 />
             //using '+" infront of a string convert it to a number
                 )
@@ -57,8 +58,8 @@ class Main extends Component {
                     <Route path='/directory/:campsiteId' component={CampsiteWithId}/>
                     <Route path='/home' component={HomePage} />
                     <Route exact path='/contactus' component={Contact} />
-                    <Route exact path='/directory' render={() => <Directory campsites={this.prop.campsites} />} />
-                    <Route exact path='/aboutus' render={() => <About partners={this.prop.partners}/>} ></Route>
+                    <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />
+                    <Route exact path='/aboutus' render={() => <About partners={this.props.partners}/>} ></Route>
                     <Redirect to='/home' />
                 </Switch>
                 

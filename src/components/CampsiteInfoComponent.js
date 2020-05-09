@@ -1,6 +1,74 @@
-import React from 'react';
-import { Card, CardImg, CardText, CardBody,  Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { Component } from 'react';
+import { Card, CardImg, CardText, CardBody,  Breadcrumb, BreadcrumbItem, Modal, ModalHeader, Form, FormGroup, Label, ModalBody, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control } from 'react-redux-form';
+
+
+class CommentForm extends Component{
+    
+    constructor(props) {
+        super(props);
+
+        this.state = {
+          isModalOpen: false
+        };
+            //finds the event hendler for the modal binding the boolean state 
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit= this.handleSubmit.bind(this);
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+                  }); 
+                }      
+     handleSubmit(event){
+                    alert('Your Comment:'+ JSON.stringify.event);
+                    this.toggleModal();
+                    event.preventDefault();
+                }
+    
+
+    render() {
+        return (
+            <React.Fragment>
+                <Button color="info" outline onClick={this.toggleModal}><i className="fas fa-pencil-alt"></i>Submit Comment</Button>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Submit Comment </ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.toggleModal}>
+                            <FormGroup>
+                                 <Label htmlFor="author">Your Name</Label>
+                                <Control.text type="text" id="author" name="author"
+                                    innerRef={input => this.author = input} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="rating">Rating</Label>
+                                <Control.select model="./rating" type="select" name="rating" id="rating">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Control.select>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="text">Comment</Label>
+                                <Control.textarea type="textarea" name="text" model="./text" id="exampleText" />
+                            </FormGroup>
+                            
+                            <Button type="submit" value="submit" color="primary" onClick={this.handleSubmit}> Submit</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
+
+    </React.Fragment>
+          
+   
+    )
+}
+};
+
 
 function RenderComments({comments}) {
 
@@ -27,7 +95,10 @@ function RenderCampsite(campsite) {
 
                     </CardBody>
                 </Card>
-            </div>
+             <CommentForm />
+             
+             </div>
+           
         );
     }
    }

@@ -85,7 +85,7 @@ class Header extends Component {
                 </Jumbotron>
                 <Navbar dark sticky="top" expand="md">
                     <div className="container">
-                        <NavbarBrand className="mr-auto" href="/"><img src="/assets/images/logo.png" height="30" width="30" alt="NuCamp Logo" /></NavbarBrand>
+                        <NavbarBrand className="mr-auto" href="/"><img src="/assets/images/images/logo.png" height="30" width="30" alt="NuCamp Logo" /></NavbarBrand>
                         <NavbarToggler onClick={this.toggleNav} />
                         <Collapse isOpen={this.state.isNavOpen} navbar>
                             <Nav navbar>
@@ -111,13 +111,13 @@ class Header extends Component {
                                 </NavItem>
                             </Nav>
                             <span className="navbar-text ml-auto">
-                                <Button outline onClick={this.toggleModal} />
+                                <Button outline onClick={this.toggleModal}> Login</Button>
                             </span>
                         </Collapse>
                     </div>
                 </Navbar>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal}> Login                  </ModalHeader>
+                    <ModalHeader toggle={this.toggleModal}> Login     </ModalHeader>
                     <ModalBody>
                     <Form onSubmit={this.handleLogin}>
                             <FormGroup>
