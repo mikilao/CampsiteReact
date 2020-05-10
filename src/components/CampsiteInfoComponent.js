@@ -1,20 +1,41 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody,  Breadcrumb, BreadcrumbItem, Modal, ModalHeader, Form, FormGroup, Label, ModalBody, Button } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, Row, Col, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, Form, Label, ModalBody, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control } from 'react-redux-form';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 
+const required = val => val && val.length;
+
+const maxLength = len => val => !val || (val.length <= len);
+// will return true is theres a val and the value is less than max length
+const minLength = len => val => val && (val.length >= len);
 
 class CommentForm extends Component{
-    
     constructor(props) {
         super(props);
-
         this.state = {
-          isModalOpen: false
+            author: "",
+
+          isModalOpen: false,
+          touched: { author: false}
         };
             //finds the event hendler for the modal binding the boolean state 
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit= this.handleSubmit.bind(this);
+    }
+ validate(author) {
+
+        const errors = {
+          author: ''
+        };
+    
+        if (this.state.touched.author) {
+            if (author.length < 2) {
+                errors.author = 'Author name must be at least 2 characters.';
+            } else if (author.length > 15) {
+                errors.author = 'Author name must be 15 or less characters.';
+            }
+          }  return errors;
+           
     }
 
     toggleModal() {
@@ -23,45 +44,67 @@ class CommentForm extends Component{
                   }); 
                 }      
      handleSubmit(event){
-                    alert('Your Comment:'+ JSON.stringify.event);
+                    alert(`Your Comment:`+ JSON.stringify(event));
                     this.toggleModal();
                     event.preventDefault();
                 }
     
 
     render() {
+       // const errors =this.validate(this.state.author);
         return (
             <React.Fragment>
                 <Button color="info" outline onClick={this.toggleModal}><i className="fas fa-pencil-alt"></i>Submit Comment</Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment </ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.toggleModal}>
-                            <FormGroup>
+                        <Form onSubmit={this.toggleModal}> 
+                        <LocalForm onSubmit={values => this.handleSubmit(values)}>
+                            <Row className="form-group">
+                                <Col>
                                  <Label htmlFor="author">Your Name</Label>
-                                <Control.text type="text" id="author" name="author"
-                                    innerRef={input => this.author = input} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="rating">Rating</Label>
-                                <Control.select model="./rating" type="select" name="rating" id="rating">
+                                <Control.text  id="author" model=".author" name="author" className="form-control"
+                                   placeholder="Your Name"
+                                   validators= {{
+                                        required, 
+                                    minLength: minLength(2),
+                                    maxLength: maxLength(15)}}/>
+                                     <Errors 
+                                    className="text-danger"
+                                    model=".author"
+                                    show="touched"
+                                    component="div"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength:'Must be at least 2 characters',
+                                        maxLength: 'Must be 15 characters or less'
+                                    }}/>
+                                    </Col>
+                           </Row>
+                            <Row className="form-group">
+                                <Col>
+                                <Label htmlFor="rating">Rating</Label>
+                                <Control.select model=".rating" type="select" name="rating" id="rating" className="form-control">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
                                     <option>5</option>
-                                </Control.select>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="text">Comment</Label>
-                                <Control.textarea type="textarea" name="text" model="./text" id="exampleText" />
-                            </FormGroup>
-                            
-                            <Button type="submit" value="submit" color="primary" onClick={this.handleSubmit}> Submit</Button>
+                                </Control.select></Col>
+                            </Row>
+                             
+                            <Row className="form-group">
+                               <Col>
+                                <Label htmlFor="text">Comment</Label>
+                                <Control.textarea  name="text" model=".text" id="text" rows='6'className="form-control" />
+                               
+                            </Col>
+                            </Row>
+                                            <Button type="submit" value="submit" color="primary" onClick={this.handleSubmit}> Submit</Button>
+                        </LocalForm>
                         </Form>
                     </ModalBody>
                 </Modal>
-
     </React.Fragment>
           
    
@@ -76,15 +119,15 @@ function RenderComments({comments}) {
         return (
             <div className="col-md-5 m-1 text-left" >
                 <h4 >Comments</h4>
-                {comments.map(comment => <div key={comment.id}>{comment.text} <br /> --{comment.author},  {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} </div>)}
-
+                {comments.map(comment => <div key={comment.campsiteId}>{comment.text} <br /> --{comment.author},  {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} </div>)}
+                <CommentForm />
             </div>
         );
     } return <div />
 
 };
-
-function RenderCampsite(campsite) {
+  
+function RenderCampsite({campsite}) {
     if(campsite){
         return (
             <div className="col-md-5 m1" >
@@ -95,9 +138,8 @@ function RenderCampsite(campsite) {
 
                     </CardBody>
                 </Card>
-             <CommentForm />
              
-             </div>
+               </div>
            
         );
     }

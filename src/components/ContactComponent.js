@@ -94,7 +94,7 @@ handleBlur = (field) => () => {
    }
 render(){
     //errors above is not called until now, validate each field using the this statement
-    const errors =this.validate(this.state.firstName, this.state.lastName, this.state.email, this.state.phoneNum);
+   // const errors =this.validate(this.state.firstName, this.state.lastName, this.state.email, this.state.phoneNum);
     return (
         <div className="container">
             <div className="row">
@@ -134,7 +134,7 @@ render(){
                             <Row className="form-group">
                                 <Label htmlFor="firstName" md={2}>First Name</Label>
                                 <Col md={10}>
-                                    <Control.text model=".firstName" id="firstName" name="firstName"
+                                    <Control.text mo del=".firstName" id="firstName" name="firstName"
                                         placeholder="First Name"
                                         className="form-control"
                                         validators= {{

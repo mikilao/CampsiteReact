@@ -45,9 +45,9 @@ class Main extends Component {
             return (
                 //creating a new array of campsite Id numbers using filter and the Campsite info component
                 <CampsiteInfo 
-                campsite={this.props.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)} 
-                comments={this.props.comments.filter(comment => comment.id=== +match.params.commentId)}
-                />
+                campsite={this.props.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)[0]} 
+                comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                            />
             //using '+" infront of a string convert it to a number
                 )
         }
