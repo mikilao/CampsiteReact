@@ -7,7 +7,7 @@ import Footer from './FooterComponent';
 import Home from "./HomeComponent";
 import About from "./AboutComponent";
 import Contact from "./ContactComponent";
-
+import {addComment} from '../redux/ActionCreators';
 import {connect} from "react-redux";
 import {Switch, Route, Redirect, withRouter} from "react-router-dom";
 
@@ -19,6 +19,9 @@ const mapStateToPRops = state => {
         promotions: state.promotions
     }
 }
+const mapDispatchToProps = {
+    addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text))
+};//a variable that returns the array with oll those obj after being passed throguh add comment
 
 class Main extends Component {
    /* constructor(props) **removed because now the states are being stored in redux** 
@@ -45,9 +48,10 @@ class Main extends Component {
             return (
                 //creating a new array of campsite Id numbers using filter and the Campsite info component
                 <CampsiteInfo 
-                campsite={this.props.campsites.filter(campsite => campsite.id=== +match.params.campsiteId)[0]} 
-                comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
-                            />
+                    campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} 
+                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                    addComment={this.props.addComment}
+                />
             //using '+" infront of a string convert it to a number
                 )
         }
@@ -70,4 +74,4 @@ class Main extends Component {
     };
 }
 
-export default withRouter(connect(mapStateToPRops)(Main));
+export default withRouter(connect(mapStateToPRops, mapDispatchToProps)(Main));
