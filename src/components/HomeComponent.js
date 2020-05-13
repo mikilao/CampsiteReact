@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, Image } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import {Loading} from './LoadingComponent'
 
-function RenderCard({item, isLoading, errMess}) {
+function RenderCard({ isLoading, errMess, item}) {
    if(isLoading){
         return ( 
         <Loading />
@@ -28,7 +28,7 @@ function RenderCard({item, isLoading, errMess}) {
          <div className="container">
              <div className="row">
                  <div className="col-md"><RenderCard 
-                 item={props.campsite}
+                 item ={props.campsite}
                  isLoading={props.campsitesLoading}
                  errMess={props.campsitesErrMess}
                  /> </div>
