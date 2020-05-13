@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody, Row, Col, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, Form, Label, ModalBody, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
- 
+import {Loading} from './LoadingComponent'
 
 const required = val => val && val.length;
 
@@ -46,7 +46,7 @@ class CommentForm extends Component{
                     //alert(`Your Comment:`+ JSON.stringify(event));
                     this.props.addComment(this.props.campsite, event.rating, event.author, event.text)
                     this.toggleModal();
-                    event.preventDefault();
+                    //event.preventDefault() stops an action or process
                 }
     
 
@@ -145,7 +145,27 @@ function RenderCampsite({campsite}) {
     }
    }
      function CampsiteInfo (props){
-            if (props.campsite) {
+        if (props.isLoading) {
+            return (
+                <div className="container">
+                    <div className="row">
+                     <Loading />
+                    </div>
+                </div>
+            );
+        }
+        if (props.errMess) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                            <h4>{props.errMess}</h4>
+                        </div>
+                    </div>
+                </div>
+            );
+            }
+                   if (props.campsite) {
                 return (
                     <div className="container">
                         <div className="row">
