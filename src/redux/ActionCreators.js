@@ -14,7 +14,7 @@ export const addComment = (campsiteId, rating, author, text) => ({
 export const fetchCampsites = () => dispatch =>{
     dispatch(campsitesLoading());
     setTimeout(() =>{
-        dispatch(addCampsites()(CAMPSITES));
+        dispatch(addCampsites(CAMPSITES));
             }, 2000)
 }
 // after the fetchcampsite run then this will 

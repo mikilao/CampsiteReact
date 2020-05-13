@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Label, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import {Link} from "react-router-dom";
-import {Control, LocalForm, Errors} from "react-redux-form";
+import {Control, actions, Form, Errors} from "react-redux-form";
 
 //returns a true or false  for the field if the field has a value in the input
 const required =val => val && val.length;
@@ -90,11 +90,12 @@ handleBlur = (field) => () => {
    handleSubmit(values){
        console.log("Current state is " + JSON.stringify(this.values))
        alert("Connected: Current State is "+ JSON.stringify(values)); //delete later just make sure it works
-      // event.preventDefault(); 
+        this.props.resetFeedbackForm();
+       // event.preventDefault(); 
    }
 render(){
     //errors above is not called until now, validate each field using the this statement
-   // const errors =this.validate(this.state.firstName, this.state.lastName, this.state.email, this.state.phoneNum);
+  // const errors =this.validate(this.state.firstName, this.state.lastName, this.state.email, this.state.phoneNum);
     return (
         <div className="container">
             <div className="row">
@@ -130,11 +131,11 @@ render(){
            <hr />
         </div>
          <div className="col-md-10">
-         <LocalForm onSubmit={values => this.handleSubmit(values)}>
+         <Form model="feedbackForm" onSubmit={values => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="firstName" md={2}>First Name</Label>
                                 <Col md={10}>
-                                    <Control.text mo del=".firstName" id="firstName" name="firstName"
+                                    <Control.text model=".firstName" id="firstName" name="firstName"
                                         placeholder="First Name"
                                         className="form-control"
                                         validators= {{
@@ -258,7 +259,7 @@ render(){
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
          </div>
      </div>
      </div>
