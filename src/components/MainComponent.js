@@ -8,7 +8,7 @@ import Home from "./HomeComponent";
 import About from "./AboutComponent";
 import Contact from "./ContactComponent";
 import {actions} from 'react-redux-form';
-import {addComment, fetchCampsites} from '../redux/ActionCreators';
+import {addComment, fetchCampsites, fetchComments, fetchPromotions} from '../redux/ActionCreators';
 import {connect} from "react-redux";
 import {Switch, Route, Redirect, withRouter} from "react-router-dom";
 
@@ -23,7 +23,9 @@ const mapStateToPRops = state => {
 const mapDispatchToProps = {
     addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
     fetchCampsites: () => (fetchCampsites()),
-    resetFeedBackForm: ()=>( actions.reset('feedbackForm'))
+    resetFeedBackForm: ()=>( actions.reset('feedbackForm')),
+    fetchComments: ()=> (fetchComments()),
+    fetchPromotions: ()=> (fetchPromotions())
 };//a variable that returns the array with oll those obj after being passed throguh add comment
 
 class Main extends Component {
@@ -39,16 +41,20 @@ class Main extends Component {
     }*/
     componentDidMount(){ //how we run the fetchcampsite
             this.props.fetchCampsites();
+            this.props.fetchPromotions();
+            this.props.fetchComments();//add actio creators here
     }
     render() {
         const HomePage = () =>{
             return( 
-                <Home 
-                campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
-                campsitesLoading={this.props.campsites.isLoading}
-                campsitesErrMess={this.props.campsites.errMess}    
-                promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
-                    partner={this.props.partners.filter(partner => partner.featured)[0]} />
+                <Home
+                    campsite={this.props.campsites.campsites.filter(campsite => campsite.featured)[0]}
+                    campsitesLoading={this.props.campsites.isLoading}
+                    campsitesErrMess={this.props.campsites.errMess}
+                    partner={this.props.partners.filter(partner => partner.featured)[0]}
+                    promotion={this.props.promotions.promotions.filter(promotion => promotion.featured)[0]}
+                    promotionLoading={this.props.promotions.isLoading}
+                    promotionErrMess={this.props.promotions.errMess}/>
             );
         }
         //initialize the new campsite with for the router link below variable with an arrow function
@@ -56,11 +62,12 @@ class Main extends Component {
             return (
                 //creating a new array of campsite Id numbers using filter and the Campsite info component
                 <CampsiteInfo 
-                    campsite={this.props.campsites.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} 
-                    campsitesLoading={this.props.campsites.campsitesLoading}
-                campsitesErrMess={this.props.campsites.errMess}  
-                    comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
-                    addComment={this.props.addComment}
+                campsite={this.props.campsites.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+                isLoading={this.props.campsites.isLoading}
+                errMess={this.props.campsites.errMess}
+                comments={this.props.comments.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                commentsErrMess={this.props.comments.errMess}
+                addComment={this.props.addComment}
                 />
             //using '+" infront of a string convert it to a number
                 )

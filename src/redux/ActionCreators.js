@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import {CAMPSITES} from '../shared/campsites';
+import {baseUrl} from '../shared/baseURL';
 
 export const addComment = (campsiteId, rating, author, text) => ({
     type: ActionTypes.ADD_COMMENT,
@@ -13,9 +13,10 @@ export const addComment = (campsiteId, rating, author, text) => ({
 //how to add a 2 second delay to an action
 export const fetchCampsites = () => dispatch =>{
     dispatch(campsitesLoading());
-    setTimeout(() =>{
-        dispatch(addCampsites(CAMPSITES));
-            }, 2000)
+   // first fetch
+   return fetch(baseUrl + 'campsites')
+   .then(response => response.json()) //returns a promise in json format
+   .then(campsites => dispatch(addCampsites(campsites)));
 }
 // after the fetchcampsite run then this will 
 export const campsitesLoading= () => () => ({
@@ -30,4 +31,41 @@ export const campsitesFailed = errMess => ({
 export const addCampsites = campsites => ({
     type: ActionTypes.ADD_CAMPSITES,
     payload: campsites
+});
+ export const fetchComments = () => dispatch => {
+     return fetch(baseUrl + 'comments')
+     .then(response => response.json())
+     .then(comments => dispatch(addComments(comments)));
+      }
+      
+export const commentsFailed = errMess => ({
+    type: ActionTypes.COMMENTS_FAILED,
+    payload: errMess
+});
+
+export const addComments = comments => ({// normal action creator
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
+});
+
+export const fetchPromotions = () => dispatch => {// thunk action creator
+    dispatch(promotionsLoading());
+
+    return fetch(baseUrl + 'promotions')
+    .then(response => response.json())
+    .then(promotions => dispatch(addPromotions(promotions)));
+}
+
+export const promotionsLoading = () => ({
+    type: ActionTypes.PROMOTIONS_LOADING
+});
+
+export const promotionsFailed = errMess => ({
+    type: ActionTypes.PROMOTIONS_FAILED,
+    payload: errMess
+});
+
+export const addPromotions = promotions => ({
+    type: ActionTypes.ADD_PROMOTIONS,
+    payload: promotions
 });

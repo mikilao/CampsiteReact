@@ -1,20 +1,21 @@
 import React from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import {Loading} from './LoadingComponent'
+import {baseUrl} from '../shared/baseURL';
 
 function RenderCard({ isLoading, errMess, item}) {
    if(isLoading){
         return ( 
         <Loading />
             );
-    }// returns loading message when loads or errMess
+    }// returns loading message when loads or errMess beofre th card loads
     if (errMess){
         return (<h4>{errMess}</h4>
         );
     }
     return (
        <Card>
-       <CardImg src={item.image} alt={item.name} />
+       <CardImg src={baseUrl + item.image} alt={item.name} />
        <CardBody>
        <CardTitle>{item.name}</CardTitle>
        <CardText>{item.description}</CardText>
@@ -32,7 +33,10 @@ function RenderCard({ isLoading, errMess, item}) {
                  isLoading={props.campsitesLoading}
                  errMess={props.campsitesErrMess}
                  /> </div>
-                 <div className="col-md"><RenderCard item={props.promotion}/></div>
+                 <div className="col-md"><RenderCard item={props.promotion}
+                 isLoading={props.promotionLoading}
+                 errMess = {props.campsitesErrMess}
+                 /></div>
                  <div className="col-md"><RenderCard item={props.partner}/></div>
                  </div>
          </div>
