@@ -11,13 +11,29 @@ export const addComment = (campsiteId, rating, author, text) => ({
     }
 });
 //how to add a 2 second delay to an action
-export const fetchCampsites = () => dispatch =>{
+export const fetchCampsites = () => dispatch => {
     dispatch(campsitesLoading());
-   // first fetch
-   return fetch(baseUrl + 'campsites')
+//first fetch
+    return fetch(baseUrl + 'campsites')
+    .then(response => {//string of promises to return errMess too
+            if (response.ok) {
+                 return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            const errMess = new Error(error.message);
+            throw errMess;
+        }
+    ) 
+
+
    .then(response => response.json()) //returns a promise in json format
-   .then(campsites => dispatch(addCampsites(campsites)));
-}
+   .then(campsites => dispatch(addCampsites(campsites)))
+   .catch(error => dispatch(campsitesFailed(error.message)));
+};
 // after the fetchcampsite run then this will 
 export const campsitesLoading= () => () => ({
     type: ActionTypes.CAMPSITES_LOADING
@@ -32,12 +48,26 @@ export const addCampsites = campsites => ({
     type: ActionTypes.ADD_CAMPSITES,
     payload: campsites
 });
- export const fetchComments = () => dispatch => {
-     return fetch(baseUrl + 'comments')
-     .then(response => response.json())
-     .then(comments => dispatch(addComments(comments)));
-      }
-      
+ 
+export const fetchComments = () => dispatch => {    
+    return fetch(baseUrl + 'comments')
+    .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errMess = new Error(error.message);
+            throw errMess;
+        }
+    )
+    .then(response => response.json())
+    .then(comments => dispatch(addComments(comments)))
+    .catch(error => dispatch(commentsFailed(error.message)));
+};
 export const commentsFailed = errMess => ({
     type: ActionTypes.COMMENTS_FAILED,
     payload: errMess
@@ -48,14 +78,29 @@ export const addComments = comments => ({// normal action creator
     payload: comments
 });
 
-export const fetchPromotions = () => dispatch => {// thunk action creator
+export const fetchPromotions = () => (dispatch) => {
+    
     dispatch(promotionsLoading());
 
     return fetch(baseUrl + 'promotions')
-    .then(response => response.json())
-    .then(promotions => dispatch(addPromotions(promotions)));
-}
-
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            }
+        )
+        .then(response => response.json())
+        .then(promotions => dispatch(addPromotions(promotions)))
+        .catch(error => dispatch(promotionsFailed(error.message)));
+        };
 export const promotionsLoading = () => ({
     type: ActionTypes.PROMOTIONS_LOADING
 });
