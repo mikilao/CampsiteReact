@@ -8,7 +8,7 @@ import Home from "./HomeComponent";
 import About from "./AboutComponent";
 import Contact from "./ContactComponent";
 import {actions} from 'react-redux-form';
-import {addComment, fetchCampsites, fetchComments, fetchPromotions} from '../redux/ActionCreators';
+import {postComment, fetchCampsites, fetchComments, fetchPromotions} from '../redux/ActionCreators';
 import {connect} from "react-redux";
 import {Switch, Route, Redirect, withRouter} from "react-router-dom";
 
@@ -21,11 +21,13 @@ const mapStateToPRops = state => {
     }
 }
 const mapDispatchToProps = {
-    addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
+    postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text)),
+   // addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
     fetchCampsites: () => (fetchCampsites()),
     resetFeedBackForm: ()=>( actions.reset('feedbackForm')),
     fetchComments: ()=> (fetchComments()),
-    fetchPromotions: ()=> (fetchPromotions())
+    fetchPromotions: ()=> (fetchPromotions()),
+   
 };//a variable that returns the array with oll those obj after being passed throguh add comment
 
 class Main extends Component {
@@ -42,7 +44,7 @@ class Main extends Component {
     componentDidMount(){ //how we run the fetchcampsite
             this.props.fetchCampsites();
             this.props.fetchPromotions();
-            this.props.fetchComments();//add actio creators here
+            this.props.fetchComments();//add action creators here
     }
     render() {
         const HomePage = () =>{
@@ -67,7 +69,8 @@ class Main extends Component {
                 errMess={this.props.campsites.errMess}
                 comments={this.props.comments.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
                 commentsErrMess={this.props.comments.errMess}
-                addComment={this.props.addComment}
+                //addComment={this.props.addComment}
+                postComment={this.props.postComment}
                 />
             //using '+" infront of a string convert it to a number
                 )

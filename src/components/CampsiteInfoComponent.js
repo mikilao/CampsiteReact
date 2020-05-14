@@ -45,7 +45,7 @@ class CommentForm extends Component{
                 }      
      handleSubmit(event){
                     //alert(`Your Comment:`+ JSON.stringify(event));
-                    this.props.addComment(this.props.campsite, event.rating, event.author, event.text)
+                    this.props.postComment(this.props.campsite, event.rating, event.author, event.text)
                     this.toggleModal();
                     //event.preventDefault() stops an action or process
                 }
@@ -114,13 +114,13 @@ class CommentForm extends Component{
 };
 
 
-function RenderComments({comments, addComment, campsiteId}) {
+function RenderComments({comments, postComment, addComment, campsiteId}) {
     if (comments) {
         return (
             <div className="col-md-5 m-1 text-left" >
                 <h4 >Comments</h4>
                 {comments.map(comment => <div key={comment.campsiteId}>{comment.text} <br /> --{comment.author},  {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} </div>)}
-                 <CommentForm  campsiteId={campsiteId} addComment={addComment} />
+                 <CommentForm  campsiteId={campsiteId} postComment={postComment} addComment={addComment} />
             </div>
         );
        
@@ -183,8 +183,9 @@ function RenderCampsite({campsite}) {
                             <RenderCampsite campsite={props.campsite} />
                             <RenderComments 
                             comments={props.comments} 
-                            addComment = {props.addComment} //to initiate the action upon the user submitting the comment form
+                          //changed to postComment  addComment = {props.addComment} //to initiate the action upon the user submitting the comment form
                             campsiteId={props.campsite.id}
+                            postComment={props.postComment} 
                             />
                         </div>
                     </div>
