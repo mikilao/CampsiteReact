@@ -20,8 +20,6 @@ export const fetchCampsites = () => dispatch => {
             throw errMess;
         }
     ) 
-
-
    .then(response => response.json()) //returns a promise in json format
    .then(campsites => dispatch(addCampsites(campsites)))
    .catch(error => dispatch(campsitesFailed(error.message)));

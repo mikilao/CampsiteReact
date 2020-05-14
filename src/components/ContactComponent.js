@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Label, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import {Link} from "react-router-dom";
-import {Control, actions, Form, Errors} from "react-redux-form";
+import {Control,  Form, Errors} from "react-redux-form";
 
 //returns a true or false  for the field if the field has a value in the input
 const required =val => val && val.length;
