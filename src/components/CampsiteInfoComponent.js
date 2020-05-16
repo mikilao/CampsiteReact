@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody, Row, Col, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, Form, Label, ModalBody, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
-import {Loading} from './LoadingComponent'
+import {Loading} from './LoadingComponent';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 import { baseUrl } from '../shared/baseURL';
 
 const required = val => val && val.length;
@@ -45,7 +46,7 @@ class CommentForm extends Component{
                 }      
      handleSubmit(event){
                     //alert(`Your Comment:`+ JSON.stringify(event));
-                    this.props.postComment(this.props.campsite, event.rating, event.author, event.text)
+                    this.props.postComment(this.props.campsiteId, event.rating, event.author, event.text)
                     this.toggleModal();
                     //event.preventDefault() stops an action or process
                 }
@@ -55,11 +56,11 @@ class CommentForm extends Component{
        // const errors =this.validate(this.state.author);
         return (
             <React.Fragment>
-                <Button color="info" outline onClick={this.toggleModal}><i className="fa fa-pencil-alt"></i>Submit Comment</Button>
+                <Button color="info" outline><i className="fab fa-pencil-alt"></i>Submit Comment</Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment </ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.toggleModal}> 
+                       
                         <LocalForm onSubmit={values => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Col>
@@ -101,9 +102,9 @@ class CommentForm extends Component{
                                
                             </Col>
                             </Row>
-                                            <Button type="submit" value="submit" color="primary" onClick={this.handleSubmit}> Submit</Button>
+                                            <Button type="submit" value="submit" color="primary" > Submit</Button>
                         </LocalForm>
-                        </Form>
+                        
                     </ModalBody>
                 </Modal>
     </React.Fragment>
@@ -119,8 +120,21 @@ function RenderComments({comments, postComment, addComment, campsiteId}) {
         return (
             <div className="col-md-5 m-1 text-left" >
                 <h4 >Comments</h4>
-                {comments.map(comment => <div key={comment.campsiteId}>{comment.text} <br /> --{comment.author},  {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} </div>)}
-                 <CommentForm  campsiteId={campsiteId} postComment={postComment} addComment={addComment} />
+                <h4>Comments</h4>
+                <Stagger in>
+                    {comments.map(comment => {
+                        return (
+                            <Fade in key={comment.id}>
+                                <div>
+                                    <p>{comment.text}<br />
+                                        -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                                    </p>
+                                </div>
+                            </Fade>
+                        );
+                    })}
+                </Stagger>
+                <CommentForm  campsiteId={campsiteId} postComment={postComment} addComment={addComment} />
             </div>
         );
        
@@ -131,16 +145,20 @@ function RenderComments({comments, postComment, addComment, campsiteId}) {
 function RenderCampsite({campsite}) {
     if(campsite){
         return (
-            <div className="col-md-5 m1" >
+            <div className="col-md-5 m-1">
+            <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                 <Card>
                     <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
                     <CardBody>
-                      <CardText>{campsite.description}</CardText>
-
+                        <CardText>{campsite.description}</CardText>
                     </CardBody>
                 </Card>
-             
-               </div>
+            </FadeTransform>
+        </div>
            
         );
     }

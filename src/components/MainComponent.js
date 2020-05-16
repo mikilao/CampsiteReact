@@ -46,7 +46,7 @@ class Main extends Component {
             this.props.fetchCampsites();
             this.props.fetchPromotions();
             this.props.fetchComments();//add action creators here
-    }
+    } 
     render() {
         const HomePage = () =>{
             return( 
@@ -80,7 +80,7 @@ class Main extends Component {
             <div>    
                 <Header />
                 <TransitionGroup>
-                    <CSSTransition key={this.props.location.key} classNames="page" timesout={300}>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
 
                     <Switch>
                         <Route path='/directory/:campsiteId' component={CampsiteWithId}/>
@@ -90,8 +90,8 @@ class Main extends Component {
                         <Route exact path='/aboutus' render={() => <About partners={this.props.partners}/>} ></Route>
                         <Redirect to='/home' />
                     </Switch>
-                  </CSSTransition>
-                  </TransitionGroup>
+              </CSSTransition>
+               </TransitionGroup>
            
                 
                 <Footer />
