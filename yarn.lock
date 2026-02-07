@@ -8202,9 +8202,9 @@ locate-path@^5.0.0:
     p-locate "^4.1.0"
 
 lodash-es@^4.17.5, lodash-es@^4.2.1:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
-  integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
+  version "4.17.23"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.23.tgz#58c4360fd1b5d33afc6c0bbd3d1149349b1138e0"
+  integrity sha512-kVI48u3PZr38HdYz98UmfPnXl2DXrpdctLrFLCd3kOx1xUkOmpFPx7gCWWM5MPkL/fD8zb+Ph0QzjGFs4+hHWg==
 
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"
@@ -10612,7 +10612,7 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-animation-components@3.0.0:
+react-animation-components@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-animation-components/-/react-animation-components-3.0.0.tgz#e6a67a3cae88c7c53e44c115fc4b59ad7300cb2c"
   integrity sha512-9BhSSQ+8ZW2RciRA1wmIybZgmyC6myPXmkOR3zBZtt5V8Zm63fxSwb+ooiZZbgC91ASS/1LHjftdzv9Y5izQFA==
